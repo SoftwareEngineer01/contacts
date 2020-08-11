@@ -1,0 +1,68 @@
+<div class="container">
+
+  <form class="my-3" #myForm="ngForm" >
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="name">Nombre</label>
+        <input type="text" name="nombre" class="form-control" id="name" placeholder="Nombre" [(ngModel)]="contactData.nombre">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="entidad">Entidad</label>
+        <input  type="text" name="Entidad" class="form-control" id="entidad" placeholder="Entidad" [(ngModel)]="contactData.Entidad">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="email">Email</label>
+        <input ype="email" name="Email" class="form-control" id="email" placeholder="Email" [(ngModel)]="contactData.Email">
+      </div>
+
+      <div class="form-group col-md-2">
+        <button type="submit" class="btn btn-success my-4 py-2" (click)="addContact()" *ngIf="!isEditMode" >AGREGAR</button>
+      </div>
+
+      <div class="form-group col-md-2">
+        <button class="btn btn-primary my-4 py-2" (click)="updateContact()" *ngIf="isEditMode" >Actualizar</button>
+      </div>
+
+    </div>
+  </form>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="">Filtrar por</label>
+      <input class="form-control" type="text" name="search" id="" placeholder="Escriba evaluación">
+    </div>
+
+    <div class="form-group col-md-3">
+      <button type="button" class="btn btn-primary my-4 py-2" >Buscar</button>
+    </div>
+
+  </div>
+
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Entidad</th>
+        <th scope="col">Email</th>
+        <th class="text-center" colspan="2" scope="col">Operaciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contact of contacts">
+        <td>{{contact.nombre}}</td>
+        <td>{{contact.Entidad}}</td>
+        <td>{{contact.Email}}</td>
+        <td class="text-center">
+          <button class="btn btn-warning" (click)="editContact(contact)">Editar</button>
+        </td>
+        <td class="">
+          <button class="btn btn-danger" (click)="deleteContact(contact)">Eliminar</button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  </div>
+
+
