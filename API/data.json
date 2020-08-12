@@ -2,32 +2,32 @@
   "rows": [
     {
       "id": 1,
-      "nombre": "Andres Perez",
-      "Entidad": "Entidad #1",
-      "Email": "andresgp@hotmail.com"
+      "nombre": "dfdfd",
+      "entidad": "Entidad #1",
+      "email": "andresgp@hotmail.com"
     },
     {
       "id": 2,
       "nombre": "Ricardo Perez",
-      "Entidad": "Entidad #2",
-      "Email": "RicardoP@hotmail.com"
+      "entidad": "Entidad #2",
+      "email": "Ricardo@hotmail.com"
     },
     {
       "id": 3,
-      "nombre": "Javier",
-      "Entidad": "Entidad",
-      "Email": "Javierg@gmail.com"
+      "nombre": "Javier2",
+      "entidad": "Entidad",
+      "email": "Javierg2@gmail.com"
     },
     {
       "nombre": "Maria",
-      "Entidad": "Entidad",
-      "Email": "maria@gmail.com",
+      "entidad": "Entidad",
+      "email": "maria@gmail.com",
       "id": 6
     },
     {
-      "nombre": "Jessica",
-      "Entidad": "Entidad",
-      "Email": "jessi@gmail.com",
+      "nombre": "Jessica d",
+      "entidad": "Entidad",
+      "email": "jessica1@gmail.com",
       "id": 7
     }
   ]

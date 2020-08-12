@@ -1,6 +1,6 @@
 export class Contact {
   id?: number;
   nombre: string;
-  Entidad: string;
-  Email: string;
+  entidad: string;
+  email: string;
 }

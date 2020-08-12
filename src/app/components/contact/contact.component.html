@@ -1,41 +1,58 @@
 <div class="container">
 
-  <form class="my-3" #myForm="ngForm" >
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label for="name">Nombre</label>
-        <input type="text" name="nombre" class="form-control" id="name" placeholder="Nombre" [(ngModel)]="contactData.nombre">
-      </div>
-      <div class="form-group col-md-3">
-        <label for="entidad">Entidad</label>
-        <input  type="text" name="Entidad" class="form-control" id="entidad" placeholder="Entidad" [(ngModel)]="contactData.Entidad">
-      </div>
-      <div class="form-group col-md-3">
-        <label for="email">Email</label>
-        <input ype="email" name="Email" class="form-control" id="email" placeholder="Email" [(ngModel)]="contactData.Email">
-      </div>
+  <h1 class="my-3">Contactos</h1>
 
-      <div class="form-group col-md-2">
-        <button type="submit" class="btn btn-success my-4 py-2" (click)="addContact()" *ngIf="!isEditMode" >AGREGAR</button>
+  <div class="borders my-3 px-3">
+    <h2 class="my-1">AGREGAR NUEVO CONTACTO</h2>
+    <form class="my-3" [formGroup]="form" (ngSubmit)="addContact()" novalidate>
+      <div class="form-row">
+
+        <div class="form-group col-md-3">
+          <label for="name">Nombre</label>
+          <input type="text" formControlName="nombre" class="form-control" id="name" placeholder="Nombre" [(ngModel)]="contactData.nombre">
+          <div *ngIf="save && form.get('nombre').errors" class="text-danger">
+              <p *ngIf="form.get('nombre').hasError('required')">Este campo es obligatorio</p>
+              <p *ngIf="form.get('nombre').hasError('pattern')">Debe ingresar solo letras</p>
+          </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="entidad">Entidad</label>
+          <input  type="text" formControlName="entidad" class="form-control" id="entidad" placeholder="Entidad" [(ngModel)]="contactData.entidad">
+          <div *ngIf="save && form.get('entidad').errors" class="text-danger">
+            <p *ngIf="form.get('entidad').hasError('required')">Este campo es obligatorio</p>
+        </div>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="email">Email</label>
+          <input type="email" formControlName="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="contactData.email">
+          <div *ngIf="save && form.get('email').errors" class="text-danger">
+            <p *ngIf="form.get('email').hasError('required')">Este campo es obligatorio</p>
+            <p *ngIf="form.get('email').hasError('pattern')">Escribir un formato de email valido</p>
+        </div>
+        </div>
+
+        <div class="form-group col-md-2">
+          <button type="submit" class="btn btn-success my-4 py-2" *ngIf="!isEditMode" >AGREGAR</button>
+        </div>
+
+        <div class="form-group col-md-2">
+          <button class="btn btn-primary my-4 py-2" (click)="updateContact()" *ngIf="isEditMode" >Actualizar</button>
+        </div>
+
       </div>
+    </form>
+  </div>
 
-      <div class="form-group col-md-2">
-        <button class="btn btn-primary my-4 py-2" (click)="updateContact()" *ngIf="isEditMode" >Actualizar</button>
-      </div>
-
-    </div>
-  </form>
-
+  <h3><strong>Filtrar Por:</strong></h3>
   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="">Filtrar por</label>
-      <input class="form-control" type="text" name="search" id="" placeholder="Escriba evaluación">
+    <div class="input-group mb-3 col-lg-6 col-md-6">
+      <div class="input-group-prepend">
+        <span class="input-group-text fa fa-search form-control-feedback" id="basic-addon1"></span>
+      </div>
+      <input class="form-control" type="text" name="search" id="" placeholder="Escriba evaluación" [(ngModel)]="text">
     </div>
-
-    <div class="form-group col-md-3">
-      <button type="button" class="btn btn-primary my-4 py-2" >Buscar</button>
-    </div>
-
   </div>
 
   <table class="table table-hover table-bordered">
@@ -44,22 +61,22 @@
         <th scope="col">Nombre</th>
         <th scope="col">Entidad</th>
         <th scope="col">Email</th>
-        <th class="text-center" colspan="2" scope="col">Operaciones</th>
+        <th class="text-center" colspan="2" scope="col">Opciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let contact of contacts">
+      <tr *ngFor="let contact of contacts | filter:text">
         <td>{{contact.nombre}}</td>
-        <td>{{contact.Entidad}}</td>
-        <td>{{contact.Email}}</td>
+        <td>{{contact.entidad}}</td>
+        <td>{{contact.email}}</td>
         <td class="text-center">
           <button class="btn btn-warning" (click)="editContact(contact)">Editar</button>
         </td>
         <td class="">
-          <button class="btn btn-danger" (click)="deleteContact(contact)">Eliminar</button>
+          <button class="btn btn-danger" (click)="deleteContact(contact)"><i class="fa fa-times-circle px-3" aria-hidden="true"></i>
+          </button>
         </td>
       </tr>
-
     </tbody>
   </table>
 

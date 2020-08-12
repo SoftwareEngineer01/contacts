@@ -36,7 +36,7 @@ export class HttpDataService {
 
   createContact(item):Observable<Contact>{
     return this.http
-      .post<Contact>(this.base_path, JSON.stringify(item), this.httpOptions)
+      .post<Contact>(this.base_path, item, this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)

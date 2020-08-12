@@ -1,6 +1,7 @@
 import { HttpDataService } from './../../services/http-data.service';
 import { Component, OnInit } from '@angular/core';
 import { Contact } from "../../models/contact";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-contact',
@@ -9,16 +10,27 @@ import { Contact } from "../../models/contact";
 })
 export class ContactComponent implements OnInit {
 
-
-  contactData = {} as Contact;
+  public form: FormGroup;
+  public contactData = {} as Contact;
   public contacts: Contact;
+  public text: string;
+  public isEditMode = false;
+  public save = false;
 
-  isEditMode = false;
-
-  constructor(public httpDataService: HttpDataService) { }
+  constructor(private formbuilder: FormBuilder,
+              private httpDataService: HttpDataService) { }
 
   ngOnInit(){
     this.getContacts();
+    this.createForm();
+  }
+
+  createForm(){
+    this.form = this.formbuilder.group({
+      nombre : ['',  [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      entidad : ['',  [Validators.required, Validators.pattern('^[a-z 0-9.-]+$')]],
+      email : ['', [Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"), Validators.required]]
+    });
   }
 
   getContacts(){
@@ -28,10 +40,16 @@ export class ContactComponent implements OnInit {
   }
 
   addContact(){
-    this.httpDataService.createContact(this.contactData).subscribe((response:any) => {
-      this.contactData =  {} as Contact;
-      this.getContacts();
-    })
+    this.save = true;
+    if (!this.form.valid) {
+      alert('Validar todos los campos');
+    }else{
+      this.httpDataService.createContact(this.form.value).subscribe(() => {
+        this.contactData =  {} as Contact;
+        this.getContacts();
+        this.save = false;
+      })
+    }
   }
 
   editContact(contact){
@@ -43,6 +61,7 @@ export class ContactComponent implements OnInit {
     this.isEditMode = !this.isEditMode;
     this.httpDataService.updateContact(this.contactData).subscribe(() => {
       this.getContacts();
+      this.save = false;
       location.reload();
     })
   }
